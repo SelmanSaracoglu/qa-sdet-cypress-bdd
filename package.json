@@ -1,0 +1,31 @@
+{
+  "name": "qa-sdet-cypress-bdd",
+  "version": "1.0.0",
+  "description": "Professional QA/SDET Automation Project with Cypress & BDD",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "cy:open": "cypress open",
+    "test:smoke": "cypress run --env TAGS='@Smoke'",
+    "test:regression": "cypress run --env TAGS='@Regression'"
+  },
+  "keywords": [
+    "cypress",
+    "cucumber",
+    "testing",
+    "sdet"
+  ],
+  "author": "Selman",
+  "license": "ISC",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^24.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
+    "cypress": "^15.8.0",
+    "esbuild": "^0.27.2"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "cypress/support/step_definitions/**/*.{js,ts}"
+    ]
+  }
+}
