@@ -6,8 +6,8 @@
   "scripts": {
     "test": "cypress run",
     "cy:open": "cypress open",
-    "test:smoke": "cypress run --env TAGS='@Smoke'",
-    "test:regression": "cypress run --env TAGS='@Regression'"
+    "test:smoke": "cypress run --env TAGS=\"@Smoke\"",
+    "test:regression": "cypress run --env TAGS=\"@Regression\""
   },
   "keywords": [
     "cypress",
