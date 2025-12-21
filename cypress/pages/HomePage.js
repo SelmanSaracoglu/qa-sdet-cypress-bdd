@@ -88,20 +88,26 @@ class HomePage {
   }
 
   /**
-   * Überprüft die Kontaktinformationen im Footer.
-   * @param {string} address - Erwartete Adresse
-   * @param {string} phone - Erwartete Telefonnummer
-   * @param {string} email - Erwartete E-Mail
+   * Überprüft nur die Adresse im Footer.
+   * @param {string} address - Die erwartete Adresse
    */
-
-  verifyContactInfo(address, phone, email) {
-    // Prüfen, ob der Text im Adresse-Element enthalten ist
+  verifyFooterAddress(address) {
     this.footerAddress.should("contain.text", address);
-    
-    // Telefon prüfen
+  }
+
+  /**
+   * Überprüft nur die Telefonnummer.
+   * @param {string} phone - Die erwartete Telefonnummer
+   */
+  verifyFooterPhone(phone) {
     this.footerPhone.should("contain.text", phone);
-    
-    // E-Mail prüfen (sowohl Text als auch href-Attribut)
+  }
+
+  /**
+   * Überprüft nur die E-Mail-Adresse.
+   * @param {string} email - Die erwartete E-Mail
+   */
+  verifyFooterEmail(email) {
     this.footerEmail.should("contain.text", email);
     this.footerEmail.find("a").should("have.attr", "href", `mailto:${email}`);
   }

@@ -37,10 +37,16 @@ Then("sollte der Menü-Toggle Button sichtbar sein", () => {
 
 // --- Footer & Kontakt ---
 
-Then("sollten die Kontaktinformationen wie folgt sein:", (dataTable) => {
-  // dataTable.rowsHash() konvertiert die Tabelle in ein Objekt
-  const data = dataTable.rowsHash();
-  HomePage.verifyContactInfo(data.Address, data.Phone, data.Email);
+Then("sollte die Adresse {string} lauten", (address) => {
+  HomePage.verifyFooterAddress(address);
+});
+
+Then("die Telefonnummer sollte {string} lauten", (phone) => {
+  HomePage.verifyFooterPhone(phone);
+});
+
+Then("die Email-Adresse sollte {string} lauten", (email) => {
+  HomePage.verifyFooterEmail(email);
 });
 
 Then("sollte der {string} Link auf {string} verweisen", (platform, url) => {

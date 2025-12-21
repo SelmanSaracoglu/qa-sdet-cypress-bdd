@@ -30,10 +30,9 @@ Feature: Startseite Validierung (Homepage Check)
   # -------------------------------------------------------------
   @Regression @REQ-008
   Scenario: Kontaktinformationen im Footer sind korrekt
-    Then sollten die Kontaktinformationen wie folgt sein:
-      | Address | Atlanta 550 Pharr Road NE Suite 525 |
-      | Phone   | (678) 817-5123                      |
-      | Email   | info@katalon.com                    |
+    Then sollte die Adresse "Atlanta 550 Pharr Road NE Suite 525" lauten
+    And die Telefonnummer sollte "(678) 817-5123" lauten
+    And die Email-Adresse sollte "info@katalon.com" lauten
 
   # -------------------------------------------------------------
   # UI TEST: SOCIAL MEDIA
