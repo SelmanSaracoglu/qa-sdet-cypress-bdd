@@ -1,0 +1,27 @@
+name: End-to-End Tests (Cypress)
+
+# Trigger: Wann soll diese Pipeline laufen?
+# Hier: Bei jedem "Push" auf den Branch "main"
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cypress-run:
+    # Die Umgebung: Wir nutzen die neueste Ubuntu-Version
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Schritt 1: Code aus dem Repository herunterladen
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Schritt 2: Node.js installieren und Abhängigkeiten laden
+      # Die Action 'cypress-io/github-action' macht das automatisch und effizienter
+      - name: Cypress Tests ausführen
+        uses: cypress-io/github-action@v6
+        with:
+          # Wir starten den Testmodus (headless)
+          # Hier lassen wir speziell unseren HomePage-Test laufen
+          command: npx cypress run --spec "cypress/e2e/features/ui/01_HomePage.feature"
