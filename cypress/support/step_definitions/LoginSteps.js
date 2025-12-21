@@ -35,3 +35,11 @@ Then("die URL sollte {string} enthalten", (urlPart) => {
 Then("sollte eine Fehlermeldung angezeigt werden, die {string} enthält", (msg) => {
   LoginPage.verifyErrorMessage(msg);
 });
+
+
+
+// ------------------------------------------
+// ------------------------------------------
+Given("er loggt sich mit {string} und {string} ein", (user, pass) => {
+  LoginPage.login(user, pass);
+});
