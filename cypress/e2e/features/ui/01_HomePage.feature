@@ -28,12 +28,20 @@ Feature: Startseite Validierung (Homepage Check)
   # -------------------------------------------------------------
   # UI TEST: FOOTER & KONTAKT
   # -------------------------------------------------------------
-  @Regression @REQ-008
-  Scenario: Kontaktinformationen im Footer sind korrekt
+  @Regression @REQ-008a
+  Scenario: Footer - Adresse ist korrekt
     Then sollte die Adresse "Atlanta 550 Pharr Road NE Suite 525" lauten
-    And die Telefonnummer sollte "(678) 817-5123" lauten
-    And die Email-Adresse sollte "info@katalon.com" lauten
 
+  @Regression @REQ-008b
+  Scenario: Footer - Telefonnummer ist korrekt
+    Then die Telefonnummer sollte "(678) 817-5123" lauten
+
+  @Regression @REQ-008c
+  Scenario: Footer - Email ist korrekt
+    Then die Email-Adresse sollte "info@katalon.com" lauten
+
+
+    
   # -------------------------------------------------------------
   # UI TEST: SOCIAL MEDIA
   # -------------------------------------------------------------
