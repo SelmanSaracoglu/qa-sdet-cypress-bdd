@@ -1,29 +1,55 @@
-# Akzeptanzkriterien (Beispiele)
+# Akzeptanzkriterien (Acceptance Criteria)
 
-Hier definieren wir die Kriterien für eine erfolgreiche Abnahme (User Story).
+## 1. Übersicht
 
-## Story: Login Funktion
-**Als** Benutzer  
-**Möchte** ich mich sicher anmelden  
-**Damit** ich Termine buchen kann.
+Dieses Dokument definiert die Akzeptanzkriterien im BDD-Format (Behavior Driven Development).
+Diese Szenarien dienen als Basis für die `.feature` Dateien in Cypress.
 
-### Kriterium 1: Erfolgreicher Login
-* **Given** Der Benutzer ist auf der Login-Seite.
-* **When** Er gibt "John Doe" und "ThisIsNotAPassword" ein.
-* **Then** Er wird auf die Startseite weitergeleitet.
+## 2. UI - Cura Healthcare Service
 
-### Kriterium 2: Fehlgeschlagener Login
-* **Given** Der Benutzer ist auf der Login-Seite.
-* **When** Er gibt ein falsches Passwort ein.
-* **Then** Er sieht eine Fehlermeldung "Login failed".
+### Feature: Login Funktionalität (AC-002, AC-003)
 
----
+**Scenario: Erfolgreicher Login**
 
-## Story: Termin Buchen (Appointment)
-**Als** Patient  
-**Möchte ich** ein Datum auswählen  
-**Damit** ich einen Arzttermin bekomme.
+- **Given** der Benutzer ist auf der Login-Seite
+- **When** er den Benutzernamen "John Doe" und das Passwort "ThisIsNotAPassword" eingibt
+- **And** er auf den Login-Button klickt
+- **Then** sollte er auf die Startseite weitergeleitet werden
+- **And** die Überschrift "Make Appointment" sollte sichtbar sein
 
-### Kriterium 1: Pflichtfelder
-* Das Datum darf nicht leer sein.
-* Das Programm (Medicaid/Medicare) muss wählbar sein.
+**Scenario: Fehlgeschlagener Login**
+
+- **Given** der Benutzer ist auf der Login-Seite
+- **When** er einen falschen Benutzernamen oder ein falsches Passwort eingibt
+- **And** er auf den Login-Button klickt
+- **Then** sollte eine Fehlermeldung "Login failed" angezeigt werden
+- **And** er sollte auf der Login-Seite bleiben
+
+### Feature: Terminbuchung (AC-004)
+
+**Scenario: Termin erfolgreich buchen**
+
+- **Given** der Benutzer ist eingeloggt
+- **And** er befindet sich auf dem Appointment-Formular
+- **When** er das Formular mit gültigen Daten ausfüllt (Datum, Kommentar)
+- **And** er die Buchung bestätigt
+- **Then** sollte die Bestätigungsseite "Appointment Confirmation" angezeigt werden
+- **And** die Buchungsdetails sollten korrekt sein
+
+## 3. API - Reqres (Backend)
+
+### Feature: Benutzerverwaltung (AC-API-01, AC-API-02)
+
+**Scenario: Neuen Benutzer erstellen (POST)**
+
+- **Given** die API-Schnittstelle "/api/users" ist verfügbar
+- **When** ich einen POST-Request mit validen Benutzerdaten (Name, Job) sende
+- **Then** sollte der Statuscode 201 (Created) zurückgegeben werden
+- **And** die Antwort sollte die erstellte ID enthalten
+
+**Scenario: Benutzerdaten abrufen (GET)**
+
+- **Given** ein Benutzer mit der ID 2 existiert
+- **When** ich einen GET-Request an "/api/users/2" sende
+- **Then** sollte der Statuscode 200 (OK) zurückgegeben werden
+- **And** die Antwort sollte die Benutzerdaten (Email, Name) enthalten

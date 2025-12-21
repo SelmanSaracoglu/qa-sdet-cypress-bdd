@@ -1,19 +1,31 @@
+# Risikobewertung (Risk Assessment)
 
-# Risikobewertung 
+## 1. Zielsetzung
 
-Wir analysieren Risiken, um unsere Tests zu priorisieren.
-Wir nutzen die Formel: **Risiko = Auswirkung x Wahrscheinlichkeit**.
+Dieses Dokument analysiert potenzielle Risiken für die Anwendung "Cura Healthcare Service".
+Unser Ziel ist es, kritische Fehler frühzeitig zu finden.
+Wir priorisieren die Testfälle basierend auf dieser Bewertung.
 
-## Risiko-Matrix
+## 2. Risikomatrix
 
-| ID  | Risiko-Beschreibung | Auswirkung | Wahrscheinlichkeit | Priorität | Test-Fokus |
-|:---:|:---|:---:|:---:|:---:|:---|
-| **R01** | Login ist nicht möglich | Hoch | Mittel | **Kritisch** | Smoke Test (Muss funktionieren) |
-| **R02** | Termin wird nicht gespeichert | Hoch | Gering | **Hoch** | Regression Test |
-| **R03** | API antwortet langsam (>2s) | Mittel | Mittel | **Mittel** | API Test |
-| **R04** | Tippfehler im Footer | Gering | Hoch | **Niedrig** | Explorativer Test |
+Wir bewerten die Risiken nach **Auswirkung** (Impact) und **Wahrscheinlichkeit** (Probability).
 
-## Strategie
-* **Kritisch / Hoch:** Diese Funktionen werden bei jedem Pull-Request getestet (Automatisierung).
-* **Mittel:** Diese Funktionen testen wir im normalen Regressionszyklus.
-* **Niedrig:** Wird manuell oder bei Zeitüberschuss getestet.
+| Risikostufe | Beschreibung | Priorität für Tests |
+| **HOCH** | Kritische Funktion funktioniert nicht. Datenverlust möglich. | **Sofort / Blocker** |
+| **MITTEL** | Hauptfunktion eingeschränkt, aber Workaround möglich. | **Hoch** |
+| **NIEDRIG** | Kosmetische Fehler (UI), keine Funktionsstörung. | **Niedrig** |
+
+## 3. Risiko-Analyse Tabelle
+
+| ID | Risiko-Beschreibung | Auswirkung | Wahrscheinlichkeit | Risikostufe | Maßnahme (Test) |
+| **R-001** | Benutzer kann sich nicht einloggen. | Hoch | Niedrig | **HOCH** | Smoke Test (Login) |
+| **R-002** | Termin wird nicht in der Datenbank gespeichert. | Hoch | Mittel | **HOCH** | E2E Test (Appointment) |
+| **R-003** | API antwortet mit Fehler 500 (Server Error). | Hoch | Niedrig | **HOCH** | API Tests (Status Code) |
+| **R-004** | Startseite lädt langsam (> 3 Sekunden). | Mittel | Mittel | **MITTEL** | Performance Check |
+| **R-005** | Icons oder Bilder werden nicht geladen. | Niedrig | Mittel | **NIEDRIG** | UI Element Check |
+| **R-006** | Falsche Fehlermeldung bei ungültigem Login. | Mittel | Niedrig | **MITTEL** | Negativ-Tests |
+
+## 4. Fazit
+
+Wir fokussieren unsere Automatisierung zuerst auf die Risiken **R-001** bis **R-003**.
+Diese Bereiche werden durch `@Smoke` und `@Regression` Tests abgedeckt.
