@@ -24,4 +24,4 @@ jobs:
         with:
           # Wir starten den Testmodus (headless)
           # Hier lassen wir speziell unseren HomePage-Test laufen
-          command: npx cypress run --spec "cypress/e2e/features/ui/01_HomePage.feature"
+          command: npx cypress run --spec cypress/e2e/features/ui/01_HomePage.feature
