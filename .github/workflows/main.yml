@@ -11,7 +11,7 @@ jobs:
   cypress-run:
     # Die Umgebung: Wir nutzen die neueste Ubuntu-Version
     runs-on: ubuntu-latest
-    
+
     steps:
       # Schritt 1: Code aus dem Repository herunterladen
       - name: Checkout Code
