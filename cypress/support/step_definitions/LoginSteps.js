@@ -1,45 +1,57 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import LoginPage from "../../pages/LoginPage";
+import HomePage from "../../pages/HomePage";
 
 // ----------------------------------------------------------------
-// Step Definitions: Login
-// Verbindung zwischen Gherkin (Feature) und Page Object (Code)
+// VORBEDINGUNGEN & LOGIN
 // ----------------------------------------------------------------
 
-// Vorbedingungen (Preconditions)
 Given("der Benutzer ist auf der Login-Seite", () => {
   LoginPage.visit();
 });
 
-// Aktionen (Actions)
-When("er den Benutzernamen {string} und das Passwort {string} eingibt", (user, pass) => {
-  LoginPage.login(user, pass);
+// Schritt für das Tippen (nutzt die neue Methode typeCredentials)
+When("er den Benutzernamen {string} und das Passwort {string} eingibt", (username, password) => {
+  LoginPage.typeCredentials(username, password);
 });
 
+// Schritt für das Klicken (nutzt die neue Methode clickLoginButton)
 When("er auf den Login-Button klickt", () => {
-  // Hinweis: Der Klick wird bereits in der 'login'-Methode im Page Object ausgeführt.
-  // Wir loggen dies hier nur zur Nachverfolgung.
-  cy.log("Login-Button wurde als Teil der Login-Methode geklickt.");
+  LoginPage.clickLoginButton();
 });
 
-// Überprüfungen (Assertions)
+Then("sollte eine Fehlermeldung angezeigt werden, die {string} enthält", (message) => {
+  LoginPage.verifyErrorMessage(message);
+});
+
 Then("sollte er auf die Startseite weitergeleitet werden", () => {
-  // Erfolgreicher Login führt zur Appointment-Seite (Anker #appointment)
-  cy.url().should("contain", "#appointment");
+  cy.url().should("include", "#appointment");
 });
 
 Then("die URL sollte {string} enthalten", (urlPart) => {
-  cy.url().should("contain", urlPart);
+  cy.url().should("include", urlPart);
 });
 
-Then("sollte eine Fehlermeldung angezeigt werden, die {string} enthält", (msg) => {
-  LoginPage.verifyErrorMessage(msg);
+// ----------------------------------------------------------------
+// LOGOUT STEPS
+// ----------------------------------------------------------------
+
+// Dieser Schritt loggt den User im Hintergrund schnell ein
+Given("der Benutzer ist eingeloggt als {string}", (username) => {
+  LoginPage.visit();
+  LoginPage.login(username, "ThisIsNotAPassword");
 });
 
+When("er das Seitenmenü öffnet", () => {
+  HomePage.btnMenuToggle.click();
+});
 
+When("er auf den Logout-Button klickt", () => {
+  HomePage.linkLogout.click();
+});
 
-// ------------------------------------------
-// ------------------------------------------
-Given("er loggt sich mit {string} und {string} ein", (user, pass) => {
-  LoginPage.login(user, pass);
+Then("sollte er wieder auf der Startseite sein", () => {
+  // Wir prüfen, ob wir auf der Landingpage sind (kein #appointment in der URL)
+  cy.url().should("eq", "https://katalon-demo-cura.herokuapp.com/");
+  HomePage.btnMenuToggle.should("be.visible");
 });

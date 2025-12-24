@@ -26,3 +26,14 @@ Feature: Login Funktionalität
       | username | password | error_msg    |
       | John Doe | Falsch12 | Login failed |
       | Hack     | NoPass   | Login failed |
+
+
+  # Logout
+  @Regression @REQ-004
+  Scenario: Erfolgreicher Logout
+    Given der Benutzer ist eingeloggt als "John Doe"
+    When er das Seitenmenü öffnet
+    And er auf den Logout-Button klickt
+    Then sollte er wieder auf der Startseite sein
+
+    

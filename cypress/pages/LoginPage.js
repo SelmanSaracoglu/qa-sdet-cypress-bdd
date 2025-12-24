@@ -32,11 +32,23 @@ class LoginPage {
    * @param {string} username - Der Benutzername
    * @param {string} password - Das Passwort
    */
-  login(username, password) {
+  typeCredentials(username, password) {
     // Cypress "type" Befehl wartet automatisch, bis das Feld bereit ist.
     this.inputUsername.clear().type(username); // Erst leeren, dann tippen
     this.inputPassword.clear().type(password);
+  }
+
+  clickLoginButton(){
     this.btnLogin.click();
+  }
+
+  /**
+   * Führt den kompletten Login in einem Schritt durch.
+   * (Nützlich für "Background"-Steps oder schnelle Logins)
+   */
+  login(username, password) {
+    this.typeCredentials(username, password);
+    this.clickLoginButton();
   }
 
   // -------------------------------------------------------------
@@ -45,7 +57,7 @@ class LoginPage {
 
   verifyErrorMessage(expectedMessage) {
     // Überprüft, ob die Fehlermeldung den erwarteten Text enthält
-    this.errorMessage.should("be.visible").and("contain", expectedMessage);
+    this.errorMessage.should("be.visible").and("contain.text", expectedMessage);
   }
 }
 

@@ -56,6 +56,11 @@ class HomePage {
     return cy.get(".fa-dribbble").parent();
   }
 
+  get linkLogout() {
+    // Menü açılınca görünen Logout seçeneği
+    return cy.contains("a", "Logout");
+  }
+
   // ACTIONS (Methoden)
   // -------------------------------------------------------------
 
@@ -66,6 +71,15 @@ class HomePage {
 
   clickMakeAppointment() {
     this.btnMakeAppointment.click();
+  }
+
+  /**
+   * Öffnet das Menü und klickt auf Logout.
+   */
+  performLogout() {
+    this.btnMenuToggle.click();
+    // Sicherstellen, dass das Menü offen ist, bevor wir klicken
+    this.linkLogout.should("be.visible").click();
   }
 
   // ASSERTIONS (Überprüfungen)
