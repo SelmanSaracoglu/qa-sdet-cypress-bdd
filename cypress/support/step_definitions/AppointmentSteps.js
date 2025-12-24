@@ -1,41 +1,52 @@
-import { When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import AppointmentPage from "../../pages/AppointmentPage";
 
 // ----------------------------------------------------------------
-// Step Definitions: Appointment
-// Nutzung von Data Tables für komplexe Formulareingaben
+// VORBEDINGUNGEN
 // ----------------------------------------------------------------
 
-// When er das Terminformular mit folgenden Daten ausfüllt:
-When("er das Terminformular mit folgenden Daten ausfüllt:", (dataTable) => {
-  // dataTable.hashes() konvertiert die Gherkin-Tabelle in ein Array von Objekten.
-  // Beispiel: [{ Facility: 'Tokyo...', Readmission: 'true', ... }]
-  const data = dataTable.hashes()[0];
-
-  const isReadmission = data.Readmission === "true";
-
-  AppointmentPage.fillAppointmentForm(
-    data.Facility,
-    isReadmission,
-    data.Program,
-    data.Date,
-    data.Comment
-  );
+Given("der Benutzer ist auf der {string} Seite", (_pageName) => {
+  // Wir prüfen nur, ob das Element für die Auswahl da ist
+  AppointmentPage.selectFacility.should("be.visible");
 });
 
-When("er die Buchung bestätigt", () => {
-  AppointmentPage.submitAppointment();
+// ----------------------------------------------------------------
+// AKTIONEN
+// ----------------------------------------------------------------
+
+When("er die Einrichtung {string} auswählt", (facility) => {
+  AppointmentPage.selectFacilityByName(facility);
 });
 
-// Assertions
-Then("sollte die Bestätigungsseite {string} angezeigt werden", (headerText) => {
-  AppointmentPage.verifyConfirmationVisible();
-  // Optional: Header-Text prüfen, falls dynamisch
-  cy.get("h2").should("have.text", headerText);
+When("er die Option {string} aktiviert", (_option) => {
+  // _option ist hier nur Text, wir rufen die Methode direkt auf
+  AppointmentPage.checkHospitalReadmission();
 });
 
-Then("die gebuchte Einrichtung sollte {string} sein", (facilityName) => {
-  // Wir prüfen, ob die Auswahl korrekt gespeichert wurde (true für Readmission hardcodiert im Testfall oben)
-  // Im echten Szenario könnte man Readmission auch dynamisch übergeben.
-  AppointmentPage.verifyBookedData(facilityName, true);
+When("er das Gesundheitsprogramm {string} wählt", (program) => {
+  AppointmentPage.selectHealthcareProgram(program);
+});
+
+When("er das Datum {string} eingibt", (date) => {
+  AppointmentPage.enterVisitDate(date);
+});
+
+When("er den Kommentar {string} schreibt", (comment) => {
+  AppointmentPage.enterComment(comment);
+});
+
+When("er auf den {string} Button klickt", (_btnName) => {
+  AppointmentPage.clickBookAppointment();
+});
+
+// ----------------------------------------------------------------
+// ÜBERPRÜFUNGEN
+// ----------------------------------------------------------------
+
+Then("sollte die Buchungsbestätigung {string} angezeigt werden", (_text) => {
+  AppointmentPage.verifyBookingSuccess();
+});
+
+Then("die gebuchte Einrichtung sollte {string} sein", (facility) => {
+  AppointmentPage.verifyFacility(facility);
 });

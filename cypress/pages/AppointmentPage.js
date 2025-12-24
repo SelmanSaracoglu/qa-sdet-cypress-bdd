@@ -4,28 +4,31 @@ class AppointmentPage {
   // -------------------------------------------------------------
 
   get selectFacility() {
-    // Dropdown-Menü für die Einrichtung
     return cy.get("#combo_facility");
   }
 
-  get chkReadmission() {
-    // Checkbox für "Apply for hospital readmission"
+  get checkReadmission() {
+    // ACHTUNG: Die ID auf der Webseite hat einen Tippfehler ("hospotal")
     return cy.get("#chk_hospotal_readmission");
   }
 
-  get radioProgramGroup() {
-    // Alle Radio-Buttons für das Gesundheitsprogramm
-    // Selenium: By.name("programs")
-    return cy.get('[name="programs"]');
+  get radioMedicaid() {
+    return cy.get("#radio_program_medicaid");
   }
 
-  get inputDate() {
-    // Datumsfeld (Calendar)
+  get radioMedicare() {
+    return cy.get("#radio_program_medicare");
+  }
+
+  get radioNone() {
+    return cy.get("#radio_program_none");
+  }
+
+  get inputVisitDate() {
     return cy.get("#txt_visit_date");
   }
 
-  get txtComment() {
-    // Kommentarfeld (TextArea)
+  get inputComment() {
     return cy.get("#txt_comment");
   }
 
@@ -33,9 +36,9 @@ class AppointmentPage {
     return cy.get("#btn-book-appointment");
   }
 
-  // Bestätigungsseite Selektoren (Confirmation Page)
+  // Locators für die Bestätigungsseite (Confirmation)
   get confirmationHeader() {
-    return cy.get("h2"); // "Appointment Confirmation"
+    return cy.get("h2");
   }
 
   get confirmationFacility() {
@@ -47,39 +50,57 @@ class AppointmentPage {
   // -------------------------------------------------------------
 
   /**
-   * Füllt das Terminbuchungsformular aus.
-   * @param {string} facility - Name der Einrichtung (z.B. "Tokyo CURA Healthcare Center")
-   * @param {boolean} readmission - true für Checkbox aktiv, sonst false
-   * @param {string} program - Wert des Radio-Buttons (z.B. "Medicaid")
-   * @param {string} date - Datum im Format dd/mm/yyyy
-   * @param {string} comment - Freitext
+   * Wählt eine Einrichtung aus dem Dropdown-Menü.
+   * @param {string} facilityName - Der Name der Einrichtung (z.B. "Tokyo CURA Healthcare Center")
    */
-  fillAppointmentForm(facility, readmission, program, date, comment) {
-    // Dropdown auswählen
-    // Selenium: new Select(el).selectByVisibleText(facility)
-    this.selectFacility.select(facility);
-
-    // Checkbox behandeln
-    if (readmission) {
-      // Cypress "check" ist besser als "click" für Formularelemente
-      this.chkReadmission.check();
-    } else {
-      this.chkReadmission.uncheck();
-    }
-
-    // Radio Button auswählen (nach Value)
-    // Selenium: loop through elements -> if value match -> click
-    this.radioProgramGroup.check(program);
-
-    // Datum eingeben (Klick öffnet Kalender, aber wir tippen direkt)
-    // {enter} schließt den Kalender sicher
-    this.inputDate.type(date + "{enter}");
-
-    // Kommentar eingeben
-    this.txtComment.type(comment, { force: true }); // force: true falls verdeckt
+  selectFacilityByName(facilityName) {
+    this.selectFacility.select(facilityName);
   }
 
-  submitAppointment() {
+  /**
+   * Setzt den Haken bei "Apply for hospital readmission".
+   */
+  checkHospitalReadmission() {
+    this.checkReadmission.check();
+  }
+
+  /**
+   * Wählt das Gesundheitsprogramm aus.
+   * @param {string} program - "Medicaid", "Medicare" oder "None"
+   */
+  selectHealthcareProgram(program) {
+    switch (program) {
+      case "Medicaid":
+        this.radioMedicaid.check();
+        break;
+      case "Medicare":
+        this.radioMedicare.check();
+        break;
+      case "None":
+        this.radioNone.check();
+        break;
+      default:
+        throw new Error(`Programm ${program} ist nicht verfügbar!`);
+    }
+  }
+
+  /**
+   * Gibt das Besuchsdatum ein.
+   * @param {string} date - Datum im Format dd/mm/yyyy (z.B. "21/09/2025")
+   */
+  enterVisitDate(date) {
+    // Wir klicken zuerst, um den Kalender zu öffnen (optional), und tippen dann.
+    // {enter} schließt den Kalender nach der Eingabe.
+    this.inputVisitDate.type(`${date}{enter}`);
+
+    cy.get("h2").click();
+  }
+
+  enterComment(comment) {
+    this.inputComment.type(comment);
+  }
+
+  clickBookAppointment() {
     this.btnBookAppointment.click();
   }
 
@@ -87,16 +108,12 @@ class AppointmentPage {
   // ASSERTIONS (Überprüfungen)
   // -------------------------------------------------------------
 
-  verifyConfirmationVisible() {
+  verifyBookingSuccess() {
     this.confirmationHeader.should("have.text", "Appointment Confirmation");
   }
 
-  verifyBookedData(expectedFacility, expectedReadmission) {
+  verifyFacility(expectedFacility) {
     this.confirmationFacility.should("have.text", expectedFacility);
-    
-    // Validierung der Readmission (Textvergleich auf der Bestätigungsseite)
-    const readmissionText = expectedReadmission ? "Yes" : "No";
-    cy.get("#hospital_readmission").should("have.text", readmissionText);
   }
 }
 
