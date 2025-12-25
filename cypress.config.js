@@ -8,6 +8,9 @@ module.exports = defineConfig({
     e2e: {
         specPattern: "cypress/e2e/features/**/*.feature",
         baseUrl: "https://katalon-demo-cura.herokuapp.com",
+        env: {
+            apiUrl: "https://reqres.in/api"
+        },
         chromeWebSecurity: false,
         video: false,
         screenshotOnRunFailure: true,

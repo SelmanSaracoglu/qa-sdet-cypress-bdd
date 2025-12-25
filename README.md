@@ -1,35 +1,44 @@
-# CURA Healthcare Service - Test Automation Framework
+# CURA Healthcare - UI Test Automation
 
-![Cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=for-the-badge&logo=cypress&logoColor=058a5e)
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-![Cucumber](https://img.shields.io/badge/Cucumber-23D96C?style=for-the-badge&logo=cucumber&logoColor=white)
-![CI Status](https://github.com/SelmanSaracoglu/qa-sdet-cypress-bdd/actions/workflows/main.yml/badge.svg)
+![Cypress](https://img.shields.io/badge/Cypress-E2E-green)
+![Status](https://img.shields.io/badge/Status-Stable-success)
 
-## 📌 Projektbeschreibung (Projektbeschreibung)
+## 📌 Projektübersicht
 
-Dieses Projekt ist ein automatisiertes Test-Framework für die **CURA Healthcare Service** Webanwendung.
-Das Ziel ist die Sicherstellung der **Qualität und Stabilität** kritischer Geschäftsprozesse (Login, Terminbuchung, Historie) gemäß medizinischen Standards.
+Dieses Projekt automatisiert die Tests für die **CURA Healthcare Service** Webseite.
+Es nutzt **Cypress** und **Cucumber (BDD)**, um sicherzustellen, dass die Hauptfunktionen der Anwendung fehlerfrei arbeiten.
 
-## 🛠 Tech Stack & Voraussetzungen
+Das Projekt basiert auf dem **Page Object Model (POM)** Design Pattern.
 
-- **Framework:** Cypress (E2E Testing)
-- **BDD:** Cucumber (Gherkin Syntax)
-- **Sprache:** JavaScript (ES6+)
-- **Umgebung:** Node.js (v14 oder höher)
+## 📂 Testumfang (Scope)
 
-## 💻 Installation & Ausführung
+Wir testen ausschließlich die Benutzeroberfläche (UI). API-Tests sind nicht Teil dieses Projekts.
 
-Um das Projekt lokal auszuführen, folgen Sie diesen Schritten:
+* **Startseite:** Validierung von Header, Footer und Links.
+* **Login:** Testen von gültigen und ungültigen Anmeldeversuchen.
+* **Termin:** Kompletter Buchungsprozess (End-to-End).
+* **Historie:** Überprüfung, ob Buchungen gespeichert werden.
 
-# 1. Repository klonen
+👉 *Detaillierte Szenarien finden Sie hier: [Test-Szenarien](./docs/Test_Szenarien.md)*
 
-git clone [https://github.com/SelmanSaracoglu/qa-sdet-cypress-bdd.git]
+## 💻 Installation & Start
 
-# 2. Abhängigkeiten installieren
+1. **Repository klonen:**
+
+   git clone [https://github.com/SelmanSaracoglu/qa-sdet-cypress-bdd.git]
+
+2. **Installation:**
 
 npm install
 
-# 3. Tests starten
+3. **Tests ausführen:**
 
-npx cypress open # GUI-Modus (Browser)
-npx cypress run # Headless-Modus (Terminal/CI)
+Im Browser (Sichtbar): npx cypress open
+Im Terminal (Hintergrund): npx cypress run
+
+4. **Technologien**
+
+JavaScript (ES6)
+Cypress v13+
+Cypress-Cucumber-Preprocessor
+Page Object Model (Architektur)

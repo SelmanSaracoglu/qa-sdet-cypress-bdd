@@ -1,31 +1,13 @@
-# Traceability Matrix (Rückverfolgbarkeit)
+# Requirements Traceability Matrix (RTM)
 
-## 1. Einführung
+Diese Matrix stellt sicher, dass jede geschäftskritische Anforderung durch mindestens einen Testfall abgedeckt ist (Bidirektionale Rückverfolgbarkeit).
 
-Diese Matrix verbindet die Anforderungen (Requirements) mit den Testfällen.
-Unser Ziel ist es, sicherzustellen, dass jede Anforderung getestet wird (100% Testabdeckung).
+| REQ-ID | Anforderung (Requirement) | Test-Szenario (Feature File) | Status |
+| :--- | :--- | :--- | :--- |
+| **REQ-001** | Startseite muss für Patienten erreichbar sein. | `01_HomePage.feature` -> Scenario: Homepage Load | ✅ Pass |
+| **REQ-002** | Datenschutz: Login nur mit validen Daten. | `02_Login.feature` -> Scenario: Valid/Invalid Login | ✅ Pass |
+| **REQ-003** | Terminbuchung muss Einrichtung & Datum speichern. | `03_Appointment.feature` -> Scenario: Booking Flow | ✅ Pass |
+| **REQ-004** | System muss Bestätigung anzeigen (Feedback). | `03_Appointment.feature` -> Scenario: Confirmation | ✅ Pass |
+| **REQ-005** | Patienten-Historie muss Buchungen auflisten. | `04_History.feature` -> Scenario: Verify History | ✅ Pass |
 
-## 2. Legende
-
-- **REQ:** Requirement (Anforderung)
-- **AC:** Acceptance Criteria (Akzeptanzkriterium)
-- **TC:** Test Case (Testfall)
-- **Prio:** Priorität (1 = Hoch, 3 = Niedrig)
-
-## 3. Matrix
-
-| REQ-ID      | Beschreibung der Anforderung                                  | AC-Referenz | Test-Szenario (TC-ID)  | Prio |
-| :---------- | :------------------------------------------------------------ | :---------- | :--------------------- | :--- |
-| **REQ-001** | Die Startseite muss korrekt laden und alle Elemente anzeigen. | AC-001      | `E01_Homepage_Check`   | 1    |
-| **REQ-002** | Benutzer können sich mit gültigen Daten einloggen.            | AC-002      | `E02_Login_Success`    | 1    |
-| **REQ-003** | Login mit falschen Daten muss abgelehnt werden.               | AC-003      | `E02_Login_Failure`    | 2    |
-| **REQ-004** | Benutzer können einen Arzttermin buchen.                      | AC-004      | `E03_Appointment_Flow` | 1    |
-| **REQ-005** | API: Neuer Benutzer kann erstellt werden (POST).              | AC-API-01   | `API_01_CreateUser`    | 1    |
-| **REQ-006** | API: Benutzerdaten können abgerufen werden (GET).             | AC-API-02   | `API_02_GetUser`       | 2    |
-| **REQ-007** | Das System muss auf mobilen Geräten nutzbar sein.             | AC-005      | `E04_Responsive_Check` | 3    |
-
-## 4. Status (Aktuell: Projektstart)
-* **Projektphase:** Initialisierung & Setup
-* **Offen (Backlog):** REQ-001 bis REQ-007
-* **Abgeschlossen:** -
-* **Aktuelle Testabdeckung:** 0%
+**Abdeckungsgrad (Coverage):** 100% der definierten UI-Anforderungen.

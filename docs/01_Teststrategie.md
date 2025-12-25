@@ -1,62 +1,20 @@
-# Teststrategie
+# Teststrategie (Test Strategy)
 
-## 1. Einführung
+## 1. Einleitung
+Dieses Dokument definiert die Strategie für die Qualitätssicherung (QA) des "Cura Healthcare" Web-Portals.
+Unser Fokus liegt auf der **Validierung der Geschäftslogik** und der **Datenintegrität** im Frontend.
 
-Dieses Dokument beschreibt die Teststrategie für das Projekt **"qa-sdet-cypress-bdd"**.
-Unser Ziel ist es, die Qualität der Software durch automatisierte Tests sicherzustellen.
-Wir testen sowohl die Benutzeroberfläche (UI) als auch die API-Schnittstellen.
+## 2. Testumfang (Scope Management)
 
-## 2. Testumfang
+Um eine hohe Stabilität für das Release v1.0 zu gewährleisten, wurde der Umfang wie folgt definiert:
 
-### 2.1 UI-Tests (Cura Healthcare Service)
+### ✅ In Scope (Priorität 1)
+* **End-to-End User Journeys:** Kompletter Prozess von Login bis zur Buchungsbestätigung.
+* **Funktionale Validierung:** Prüfung von Pflichtfeldern, Datumslogik und Dropdowns.
+* **UI-Feedback:** Überprüfung von Erfolgs- und Fehlermeldungen.
 
-Wir testen die Webanwendung: `https://katalon-demo-cura.herokuapp.com/`
-
-Der Fokus liegt auf diesen Bereichen:
-
-- **Startseite (Home Page):**
-  - Überprüfung der Ladezeit und Erreichbarkeit.
-  - Kontrolle des Seitentitels (Page Title).
-  - Prüfung aller Elemente (Header, Footer, Icons).
-  - Validierung der Links und Weiterleitungen.
-- **Login-Prozess:** Gültige und ungültige Anmeldeversuche.
-- **Terminbuchung (Appointment):** Der gesamte Prozess einer Terminvereinbarung.
-
-### 2.2 API-Tests (Reqres)
-
-Wir testen die REST-API: `https://reqres.in/`
-
-Der Fokus liegt auf diesen Funktionen:
-
-- **Authentifizierung:** Login und Register via API.
-- **Benutzerverwaltung (User CRUD):**
-  - Benutzer erstellen (POST)
-  - Benutzerdaten abrufen (GET)
-  - Benutzer aktualisieren (PUT)
-  - Benutzer löschen (DELETE)
-
-## 3. Testarten
-
-Wir verwenden verschiedene Testarten für maximale Stabilität:
-
-1.  **Smoke Tests (@Smoke):**
-    - Diese Tests laufen bei jedem "Push" in GitHub.
-    - Sie prüfen die wichtigsten Grundfunktionen (z. B. Ist die Seite erreichbar? Funktioniert der Login?).
-2.  **Regression Tests (@Regression):**
-    - Diese Tests prüfen das gesamte System detailliert.
-    - Sie stellen sicher, dass neue Änderungen keine alten Funktionen beschädigen.
-3.  **E2E (End-to-End) Tests:**
-    - Wir simulieren das Verhalten eines echten Benutzers von A bis Z.
-
-## 4. Werkzeuge & Technologie
-
-- **Test-Framework:** Cypress (JavaScript)
-- **Methodik:** BDD (Behavior Driven Development) mit Cucumber
-- **Architektur:** Page Object Model (POM) für Wartbarkeit
-- **CI/CD:** GitHub Actions (Automatische Ausführung)
-- **Reporting:** Screenshots und Videos bei Fehlern
-
-## 5. Umgebung
-
-- **Browser:** Google Chrome / Electron
-- **Betriebssystem:** Windows / Linux (via CI)
+## 3. Methodik & Werkzeuge
+Wir setzen auf **Behavior Driven Development (BDD)**, um eine Brücke zwischen Fachbereich und Entwicklung zu schlagen.
+* **Framework:** Cypress (für schnelle, zuverlässige E2E Tests).
+* **Architektur:** Page Object Model (für Wartbarkeit und Wiederverwendbarkeit).
+* **Reporting:** Automatische Generierung von Testnachweisen (Evidence).
